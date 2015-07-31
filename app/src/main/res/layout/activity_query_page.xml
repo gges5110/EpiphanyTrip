@@ -1,0 +1,112 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.example.hackdfw.epiphanytripapp.FrontEnd.QueryPage"
+    android:background="@mipmap/sunny"
+    android:weightSum="3"
+    android:orientation="vertical">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:orientation="horizontal"
+    android:layout_weight="2"
+    android:weightSum="3">
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="100dp"
+            android:text="Location"
+            android:id="@+id/textView"
+            android:textSize="20dp"
+            android:layout_gravity="left"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Time"
+            android:id="@+id/textView2"
+            android:textSize="20dp"
+            android:layout_gravity="left"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Distance"
+            android:id="@+id/textView3"
+            android:textSize="20dp"
+            android:layout_gravity="left"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+            <EditText
+                android:text="Dallas"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:id="@+id/Query_edit_text_location_city"
+                android:textSize="20dp"
+                android:layout_marginTop="100dp"
+                android:hint="@string/Query_command_1" />
+            <EditText
+                android:text="TX"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:id="@+id/Query_edit_text_location_state"
+                android:textSize="20dp"
+                android:layout_marginTop="100dp"
+                android:hint="@string/Query_command_1" />
+        </LinearLayout>
+
+        <Button
+            android:text=""
+            android:hint="@string/Query_command_2"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/Query_edit_text_2"
+            android:textSize="20dp"
+            android:onClick="showDatePickerDialog"
+            android:layout_marginLeft="0dp" />
+        <EditText
+            android:text="20"
+            android:hint="@string/Query_command_3"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/Query_edit_text_distance"
+            android:textSize="20dp"
+            android:gravity="left"/>
+
+    </LinearLayout>
+</LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+
+        android:text="Start"
+        android:textSize="20dp"
+        android:id="@+id/button"
+        android:onClick="startSearch" />
+</LinearLayout>
