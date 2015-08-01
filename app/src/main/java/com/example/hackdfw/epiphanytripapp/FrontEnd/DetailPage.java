@@ -10,13 +10,14 @@ import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.hackdfw.epiphanytripapp.Attraction.Attraction;
 import com.example.hackdfw.epiphanytripapp.R;
 
 import java.io.InputStream;
 
 
 public class DetailPage extends Activity {
-
+    private final String TAG = "DetailActivity";
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
@@ -46,7 +47,20 @@ public class DetailPage extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_page);
-        Bundle bundle=this.getIntent().getExtras();
+
+        Bundle bundle = getIntent().getBundleExtra("bundleA");
+        if(bundle == null)
+            Log.v(TAG, "bundle null");
+        Attraction att = bundle.getParcelable("Chose");
+
+        Attraction att1 = bundle.getParcelable("Chose");
+
+        if(att == null) {
+            Log.v(TAG, "att == null");
+        }
+        if(att1 == null) {
+            Log.v(TAG, "att1 == null");
+        }
 
         String name = bundle.getString("name");
         Log.v("Details", name);
@@ -54,13 +68,13 @@ public class DetailPage extends Activity {
         if (tv_name == null)
             Log.v("Detail", "ERROROROROROR");
         //name = "Attraction: " + name;
-        tv_name.setText(name);
+        tv_name.setText(att1.getName());
         tv_name.setTextSize(TypedValue.COMPLEX_UNIT_DIP,28);
 
         String city = bundle.getString("city");
         TextView tv_city = (TextView) findViewById(R.id.city);
         city = "City: "+city;
-        tv_city.setText(city);
+        tv_city.setText(att.getCity());
         tv_city.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
         String URL = bundle.getString("url");
