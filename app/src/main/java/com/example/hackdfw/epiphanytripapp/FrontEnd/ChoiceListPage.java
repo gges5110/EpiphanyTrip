@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,7 +42,6 @@ import javax.xml.xpath.XPathException;
  */
 
 public class ChoiceListPage extends Activity implements View.OnClickListener {
-    private final String TAG = "ChoiceListPage";
     private AttractionDatabase attdb = null;
     private ListView listview;
     @Override
@@ -52,25 +50,19 @@ public class ChoiceListPage extends Activity implements View.OnClickListener {
         Intent intent = new Intent(this, DetailPage.class);
         Bundle bundle=new Bundle();
         Log.v("Id : ", "" + v.getId());
-        Attraction chosenAtt = attdb.getAllAttractions().get(v.getId());
-//        bundle.putParcelable("Chose", attdb.getAllAttractions().get(v.getId()));
-//        if(attdb.getAllAttractions().get(v.getId()) == null)
-//            Log.v(TAG, "parcelable is null");
-//        bundle.putInt("Chosen", v.getId());
-//
-//        bundle.putString("name",attdb.getAllAttractions().get(v.getId()).getName());
-//        bundle.putString("city",attdb.getAllAttractions().get(v.getId()).getCity());
-//        bundle.putString("url",attdb.getAllAttractions().get(v.getId()).getPicURL());
-//        if(attdb.getAllAttractions().get(v.getId()).getWeather() == null)
-//            bundle.putString("weather","Not Available");
-//        else
-//            bundle.putString("weather",attdb.getAllAttractions().get(v.getId()).getWeather().getSummary());
-//        bundle.putDouble("rating",attdb.getAllAttractions().get(v.getId()).getRating());
-//        bundle.putDouble("distance",attdb.getAllAttractions().get(v.getId()).getDistanceFromStart());
+        bundle.putInt("Chosen", v.getId());
 
-        bundle.putParcelable("key", chosenAtt);
-//        intent.putExtras(bundle);
-        intent.putExtra("bundleA", bundle);
+        bundle.putString("name",attdb.getAllAttractions().get(v.getId()).getName());
+        bundle.putString("city",attdb.getAllAttractions().get(v.getId()).getCity());
+        bundle.putString("url",attdb.getAllAttractions().get(v.getId()).getPicURL());
+        if(attdb.getAllAttractions().get(v.getId()).getWeather() == null)
+            bundle.putString("weather","Not Available");
+        else
+            bundle.putString("weather",attdb.getAllAttractions().get(v.getId()).getWeather().getSummary());
+        bundle.putDouble("rating",attdb.getAllAttractions().get(v.getId()).getRating());
+        bundle.putDouble("distance",attdb.getAllAttractions().get(v.getId()).getDistanceFromStart());
+
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 
