@@ -144,19 +144,20 @@ public class ChoiceListPage extends Activity implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
                         Intent intent = new Intent(getBaseContext(), DetailPage.class);
-                        Bundle bundle=new Bundle();
+                        Bundle bundle = new Bundle();
                         Log.v("Id : ", "" + position);
-                        bundle.putInt("Chosen", position);
+//                        bundle.putInt("Chosen", position);
+                        bundle.putParcelable("Chose", attdb.getAllAttractions().get(position));
 
-                        bundle.putString("name",attdb.getAllAttractions().get(position).getName());
-                        bundle.putString("city", attdb.getAllAttractions().get(position).getCity());
-                        bundle.putString("url",attdb.getAllAttractions().get(position).getPicURL());
-                        if(attdb.getAllAttractions().get(position).getWeather() == null)
-                            bundle.putString("weather","Not Available");
-                        else
-                            bundle.putString("weather",attdb.getAllAttractions().get(position).getWeather().getSummary());
-                        bundle.putDouble("rating",attdb.getAllAttractions().get(position).getRating());
-                        bundle.putDouble("distance",attdb.getAllAttractions().get(position).getDistanceFromStart());
+//                        bundle.putString("name",attdb.getAllAttractions().get(position).getName());
+//                        bundle.putString("city", attdb.getAllAttractions().get(position).getCity());
+//                        bundle.putString("url",attdb.getAllAttractions().get(position).getPicURL());
+//                        if(attdb.getAllAttractions().get(position).getWeather() == null)
+//                            bundle.putString("weather","Not Available");
+//                        else
+//                            bundle.putString("weather",attdb.getAllAttractions().get(position).getWeather().getSummary());
+//                        bundle.putDouble("rating",attdb.getAllAttractions().get(position).getRating());
+//                        bundle.putDouble("distance",attdb.getAllAttractions().get(position).getDistanceFromStart());
 
                         intent.putExtras(bundle);
                         startActivity(intent);

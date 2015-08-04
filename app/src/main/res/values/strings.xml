@@ -11,4 +11,5 @@
     <string name="title_activity_choice_list_page">ChoiceListPage</string>
     <string name="Available_Options">Available options are:</string>
     <string name="title_activity_detail_page">DetailPage</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
