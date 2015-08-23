@@ -1,113 +1,86 @@
 package com.example.hackdfw.epiphanytripapp.FrontEnd;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Vibrator;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hackdfw.epiphanytripapp.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 
-public class QueryPage extends ActionBarActivity {
+public class QueryPage extends FragmentActivity implements DatePickerDialog.OnDateSetListener {
 
-    private static Date date = null;
-    private static int year_g = 0;
-    private static int month_g = 0;
-    private static int day_g = 0;
+    private Date date = null;
+    private TextView Query_edit_text_2;
+    private EditText Query_edit_text_city, Query_edit_text_state, Query_edit_text_distance;
+    private GoogleMap googleMap;
+    public static final String TAG = "QueryPage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_page);
+        Query_edit_text_2 = (TextView) findViewById(R.id.Query_edit_text_2);
+        Query_edit_text_city = (EditText) findViewById(R.id.Query_edit_text_location_city);
+        Query_edit_text_state = (EditText) findViewById(R.id.Query_edit_text_location_state);
+        Query_edit_text_distance = (EditText) findViewById(R.id.Query_edit_text_distance);
+        if(googleMap == null) {
+            try{
+                googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_query_page, menu);
-        return true;
+    public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
+        // Do something with the date chosen by the user
+        Calendar c = new GregorianCalendar(year, month,day);
+        date = c.getTime();
+
+        Query_edit_text_2.setText(date.toString());
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
-
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-            year_g = year;
-            month_g = month;
-            day_g = day;
-
-            Calendar c = new GregorianCalendar();
-            c.set(year, month,day);
-            date = c.getTime();
-            TextView Query_edit_text_2 = (TextView) getActivity().findViewById(R.id.Query_edit_text_2);
-            Query_edit_text_2.setText(date.toString());
-        }
-    }
-
-    private DialogFragment newFragment  = null;
     public void showDatePickerDialog(View v) {
-        newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        Calendar now = Calendar.getInstance();
+        DatePickerDialog dpd = DatePickerDialog.newInstance(
+                QueryPage.this,
+                now.get(Calendar.YEAR),
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+        );
+        dpd.show(getFragmentManager(), "Datepickerdialog");
     }
 
     public void startSearch(View view)  {
+        LatLng locationLatLng = googleMap.getCameraPosition().target;
+        Log.v(TAG, locationLatLng.toString());
+
         // Do something in response to button
         Vibrator vb = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         vb.vibrate(1000);
 
-        EditText Query_edit_text_city = (EditText) findViewById(R.id.Query_edit_text_location_city);
         String str1 = Query_edit_text_city.getText().toString().trim();
-
-        EditText Query_edit_text_state = (EditText) findViewById(R.id.Query_edit_text_location_state);
         String str2 = Query_edit_text_state.getText().toString().trim();
 
         String location = str1 + ", " + str2;
 
-        EditText Query_edit_text_distance = (EditText) findViewById(R.id.Query_edit_text_distance);
         String str3 = Query_edit_text_distance.getText().toString().trim();
 
         int distance = 0;
@@ -132,12 +105,10 @@ public class QueryPage extends ActionBarActivity {
             // TODO: new a query class(Parcelable) to make pass in easier
             bundle.putString("Location", location);
             bundle.putInt("Distance", distance);
-            bundle.putInt("Year", year_g);
-            bundle.putInt("Month", month_g);
-            bundle.putInt("Day", day_g);
+            bundle.putSerializable("Date", date);
+            bundle.putParcelable("LocationLatLng", locationLatLng);
             intent.putExtras(bundle);
             startActivity(intent);
         }
-
     }
 }

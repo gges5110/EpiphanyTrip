@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.example.hackdfw.epiphanytripapp.Attraction.Attraction;
 import com.example.hackdfw.epiphanytripapp.Attraction.AttractionDatabase;
 import com.example.hackdfw.epiphanytripapp.R;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -46,6 +47,7 @@ public class ChoiceListPage extends Activity {
     private final String TAG = "ChoiceListPage";
     private AttractionDatabase attdb = null;
     private ListView listview;
+    private LatLng locationLatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +56,17 @@ public class ChoiceListPage extends Activity {
         listview =  (ListView) findViewById(R.id.list);
 
         Bundle b = this.getIntent().getExtras();
-        int distance = b.getInt("Distance");
-        String location = b.getString("Location");
+        Date date = (Date) b.getSerializable("Date");
+        locationLatLng = b.getParcelable("LocationLatLng");
 
-        Calendar c = new GregorianCalendar();
-        c.set(b.getInt("Year"), b.getInt("Month"), b.getInt("Day"));
-        Date date = c.getTime();
+        if(date == null)
+            date = Calendar.getInstance().getTime();
+
         try{
-            attdb = new AttractionDatabase(location, date, distance); }
-        catch (XPathException e){ e.printStackTrace(); }
-        catch (IOException e){ e.printStackTrace(); }
-
+            String start_location = Double.toString(locationLatLng.latitude) + ", " + Double.toString(locationLatLng.longitude);
+            attdb = new AttractionDatabase(start_location, date, b.getInt("Distance")); }
+        catch (XPathException | IOException e){ e.printStackTrace(); }
         CreateList(attdb.getAllAttractions());
-
     }
 
     public void CreateList(ArrayList<Attraction> list){
@@ -93,7 +93,6 @@ public class ChoiceListPage extends Activity {
                         bundle.putParcelable("Chose", attdb.getAllAttractions().get(position));
                         intent.putExtras(bundle);
                         startActivity(intent);
-
             }
         });
     }

@@ -60,8 +60,10 @@ public class YelpQuery {
 		String output_query;
 		JSONParser parser;
 		JSONObject response = null;
-		distance  = (int)distance * 1609;
-		
+		distance *= 1609;
+
+		double latitude = 0, longitude = 0;
+
 		//if true get longitude and latitude 
 		if (first_letter <= 'z' && first_letter >= 'a'){
 			output_query = this.yelpAPI.search(start_location, distance, true);
@@ -75,8 +77,8 @@ public class YelpQuery {
 			}
 			JSONObject region_info = (JSONObject)response.get("region");
 			JSONObject center      = (JSONObject)region_info.get("center");
-			double latitude  = (double)center.get("latitude");
-			double longitude = (double)center.get("longitude");
+			latitude  = (double)center.get("latitude");
+			longitude = (double)center.get("longitude");
 			start_location = Double.toString(latitude) + ", " + Double.toString(longitude);
 		}
 			
@@ -110,7 +112,7 @@ public class YelpQuery {
 			double rating = (double)cur_business.get("rating");
 			JSONArray display = (JSONArray)loc.get("display_address");
 			String city_name = ((String)display.get(display.size()-1)).replaceAll("[0-9]", "").trim();
-			Attraction a = new Attraction(attr_name, city_name, rating, attr_distance, picURL);
+			Attraction a = new Attraction(latitude, longitude, attr_name, city_name, rating, attr_distance, picURL);
 			list.add(a);
 		}
 		

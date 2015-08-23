@@ -1,4 +1,6 @@
 package com.example.hackdfw.epiphanytripapp.Yelp;
+import android.util.Log;
+
 import com.example.hackdfw.epiphanytripapp.TwoStepOAuth;
 
 import org.scribe.builder.ServiceBuilder;
@@ -21,6 +23,7 @@ import org.scribe.oauth.OAuthService;
  */
 public class YelpAPI {
 
+  private final static String TAG = "YelpAPi";
   private String API_HOST = "api.yelp.com";
   private String search_term;
   //private static final String DEFAULT_LOCATION = "San Francisco, CA";
@@ -117,8 +120,8 @@ public class YelpAPI {
    * Queries the Search API based on the command line arguments and takes the first result to query
    * the Business API.
    * 
-   * @param yelpApi <tt>YelpAPI</tt> service instance
-   * @param yelpApiCli <tt>YelpAPICLI</tt> command line arguments
+   * @param //yelpApi <tt>YelpAPI</tt> service instance
+   * @param //yelpApiCli <tt>YelpAPICLI</tt> command line arguments
    */
   private String queryAPI(boolean location_by_name) {
     String searchResponseJSON =
@@ -139,6 +142,9 @@ public class YelpAPI {
   }
 
   public String search(String location, int distance, boolean location_by_name){
+    Log.v(TAG, location);
+    Log.v(TAG, String.valueOf(distance));
+
 	  return this.search(location, distance, 10, location_by_name);
   }
   

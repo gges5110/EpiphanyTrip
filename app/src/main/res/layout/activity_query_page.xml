@@ -12,8 +12,9 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:orientation="horizontal"
-    android:layout_weight="2"
-    android:weightSum="3">
+    android:layout_weight="1"
+    android:weightSum="3"
+        android:layout_marginTop="80dp">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -23,7 +24,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="100dp"
             android:text="Location"
             android:id="@+id/textView"
             android:textSize="20dp"
@@ -57,7 +57,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:weightSum="2">
             <EditText
@@ -67,7 +67,6 @@
                 android:layout_weight="1"
                 android:id="@+id/Query_edit_text_location_city"
                 android:textSize="20dp"
-                android:layout_marginTop="100dp"
                 android:hint="@string/Query_command_1" />
             <EditText
                 android:text="TX"
@@ -76,7 +75,6 @@
                 android:layout_weight="1"
                 android:id="@+id/Query_edit_text_location_state"
                 android:textSize="20dp"
-                android:layout_marginTop="100dp"
                 android:hint="@string/Query_command_1" />
         </LinearLayout>
 
@@ -97,14 +95,20 @@
             android:id="@+id/Query_edit_text_distance"
             android:textSize="20dp"
             android:gravity="left"/>
-
     </LinearLayout>
+
 </LinearLayout>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_weight="2" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="80dp"
-
         android:text="Start"
         android:textSize="20dp"
         android:id="@+id/button"

@@ -6,10 +6,9 @@ import android.os.Parcelable;
 import com.example.hackdfw.epiphanytripapp.Weather.Weather;
 
 public class Attraction implements Parcelable{
-	private String name;
-	private String cityName;
-	private double rating;
-	private double distanceFromStart;
+	private double latitude, longitude;
+	private String name, cityName;
+	private double rating, distanceFromStart;
 	private String picURL;
 	Weather weather;
 
@@ -21,6 +20,8 @@ public class Attraction implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+		dest.writeDouble(latitude);
+		dest.writeDouble(longitude);
         dest.writeString(name);
         dest.writeString(cityName);
         dest.writeDouble(rating);
@@ -30,6 +31,8 @@ public class Attraction implements Parcelable{
     }
 
     private Attraction(Parcel in){
+		this.latitude = in.readDouble();
+		this.longitude = in.readDouble();
         this.name = in.readString();
         this.cityName = in.readString();
         this.rating = in.readDouble();
@@ -50,7 +53,9 @@ public class Attraction implements Parcelable{
         }
     };
 
-	public Attraction(String n, String cn, double r, double dfs, String pu){
+	public Attraction(double latitude, double longitude, String n, String cn, double r, double dfs, String pu){
+		this.latitude = latitude;
+		this.longitude = longitude;
 		name = n;
 		cityName = cn; //city, STATE
 		rating = r;
@@ -58,31 +63,25 @@ public class Attraction implements Parcelable{
 		picURL = pu;
 		weather = null;
 	}
-		
-	public String getName(){
-		return name;
-	}
-	
+
+	public double getLatitude() { return latitude;	}
+	public double getLongitude() { return longitude; }
+	public String getName() { return name; }
 	public String getCity(){
 		return cityName;
 	}
-	
 	public double getRating(){
 		return rating;
 	}
-	
 	public double getDistanceFromStart(){
 		return distanceFromStart;
 	}
-	
 	public void setWeather(Weather w){
 		weather = w;
 	}
-	
 	public Weather getWeather(){
 		return weather;
 	}
-	
 	public String getPicURL(){
 		return picURL;
 	}

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.hackdfw.epiphanytripapp.Attraction.Attraction;
 import com.example.hackdfw.epiphanytripapp.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -23,35 +24,9 @@ import java.io.InputStream;
 
 
 public class DetailPage extends Activity {
+
     private final String TAG = "DetailActivity";
-    static final LatLng TutorialsPoint = new LatLng(21 , 57);
     private GoogleMap googleMap;
-
-
-//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-//        ImageView bmImage;
-//
-//        public DownloadImageTask(ImageView bmImage) {
-//            this.bmImage = bmImage;
-//        }
-//
-//        protected Bitmap doInBackground(String... urls) {
-//            String urldisplay = urls[0];
-//            Bitmap mIcon11 = null;
-//            try {
-//                InputStream in = new java.net.URL(urldisplay).openStream();
-//                mIcon11 = BitmapFactory.decodeStream(in);
-//            } catch (Exception e) {
-//                Log.e("Error", e.getMessage());
-//                e.printStackTrace();
-//            }
-//            return mIcon11;
-//        }
-//
-//        protected void onPostExecute(Bitmap result) {
-//            bmImage.setImageBitmap(result);
-//        }
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +35,8 @@ public class DetailPage extends Activity {
 
         try {
             if (googleMap == null) {
-                googleMap = ((MapFragment) getFragmentManager().
-                        findFragmentById(R.id.map)).getMap();
+                googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             }
-
-//            googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-            Marker TP = googleMap.addMarker(new MarkerOptions().
-                    position(TutorialsPoint).title("TutorialsPoint"));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -77,63 +47,32 @@ public class DetailPage extends Activity {
         if(bundle == null)
             Log.v(TAG, "bundle null");
         Attraction att = bundle.getParcelable("Chose");
-//
-//        Attraction att1 = bundle.getParcelable("Chose");
-//
-//        if(att == null) {
-//            Log.v(TAG, "att == null");
-//        }
-//        if(att1 == null) {
-//            Log.v(TAG, "att1 == null");
-//        }
 
-//        String name = bundle.getString("name");
-//        Log.v("Details", name);
         TextView tv_name = (TextView) findViewById(R.id.name_detail);
-//        if (tv_name == null)
-//            Log.v("Detail", "ERROROROROROR");
-        //name = "Attraction: " + name;
         tv_name.setText(att.getName());
-        tv_name.setTextSize(TypedValue.COMPLEX_UNIT_DIP,28);
 
-//        String city = bundle.getString("city");
         TextView tv_city = (TextView) findViewById(R.id.city);
-//        city = "City: "+city;
         tv_city.setText(att.getCity());
-        tv_city.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
-//        String URL = bundle.getString("url");
         TextView tv_url = (TextView) findViewById(R.id.url);
         tv_url.setText("URL: " + att.getPicURL());
-        tv_url.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
-//        String weather = bundle.getString("weather");
-        TextView tv_weather = (TextView) findViewById(R.id.weather);
-//        weather = "Weather: " + weather;
-        tv_weather.setText(att.getWeather().getSummary());
-        tv_weather.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
+        if(att.getWeather() != null) {
+            TextView tv_weather = (TextView) findViewById(R.id.weather);
+            tv_weather.setText(att.getWeather().getSummary());
+        }
 
-//        double rating = bundle.getDouble("rating");
         TextView tv_rating = (TextView) findViewById(R.id.rating);
         tv_rating.setText("Rating: " + att.getRating() + "/5.0");
-        tv_rating.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
-//        double distance = bundle.getDouble("distance");
         TextView tv_distance = (TextView) findViewById(R.id.Distance);
         tv_distance.setText("Distance from origin: "+ att.getDistanceFromStart() * 0.000621371192 +" (miles)");
-        tv_distance.setTextSize(TypedValue.COMPLEX_UNIT_DIP,20);
 
         new DownloadImageTask((ImageView) findViewById(R.id.imageView2))
                 .execute(att.getPicURL());
 
-//        ImageView mImgView = (ImageView) findViewById(R.id.imageView2);
-//        //String url = "https://www.morroccomethod.com/components/com_virtuemart/shop_image/category/resized/Trial_Sizes_4e4ac3b0d3491_175x175.jpg";
-//        BitmapFactory.Options bmOptions;
-//        bmOptions = new BitmapFactory.Options();
-//        bmOptions.inSampleSize = 1;
-//        Bitmap bm = BitmapFactory.loadBitmap(URL, bmOptions);
-//        mImgView.setImageBitmap(bm);
+        LatLng thisBusiness = new LatLng(att.getLatitude(), att.getLongitude());
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(thisBusiness, 10f));
+        googleMap.addMarker(new MarkerOptions().position(thisBusiness).title(att.getName()));
     }
-
-
 }
