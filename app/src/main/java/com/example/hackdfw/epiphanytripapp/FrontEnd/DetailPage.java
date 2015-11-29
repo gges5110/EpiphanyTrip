@@ -54,8 +54,8 @@ public class DetailPage extends Activity {
         TextView tv_city = (TextView) findViewById(R.id.city);
         tv_city.setText(att.getCity());
 
-        TextView tv_url = (TextView) findViewById(R.id.url);
-        tv_url.setText("URL: " + att.getPicURL());
+//        TextView tv_url = (TextView) findViewById(R.id.url);
+//        tv_url.setText("URL: " + att.getPicURL());
 
         if(att.getWeather() != null) {
             TextView tv_weather = (TextView) findViewById(R.id.weather);
@@ -66,7 +66,9 @@ public class DetailPage extends Activity {
         tv_rating.setText("Rating: " + att.getRating() + "/5.0");
 
         TextView tv_distance = (TextView) findViewById(R.id.Distance);
-        tv_distance.setText("Distance from origin: "+ att.getDistanceFromStart() * 0.000621371192 +" (miles)");
+        double distance = att.getDistanceFromStart() * 0.000621371192;
+        distance = Math.round(distance * 100) / 100;
+        tv_distance.setText("Distance from origin: "+ distance +" (miles)");
 
         new DownloadImageTask((ImageView) findViewById(R.id.imageView2))
                 .execute(att.getPicURL());

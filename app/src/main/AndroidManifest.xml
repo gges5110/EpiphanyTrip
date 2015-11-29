@@ -56,5 +56,9 @@
             android:name=".FrontEnd.MapsActivity"
             android:label="@string/title_activity_maps" >
         </activity>
+
+        <activity
+            android:name=".FrontEnd.TestActivity"
+            android:label="TestActivity"/>
     </application>
 </manifest>

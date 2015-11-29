@@ -22,6 +22,7 @@ public class WeatherQuery {
 	private String httpRequest = "http://api.wunderground.com/api/7b5d56ecee70528f/";
     private XPath xpath;
     private InputSource inputXml = null;
+    private static final String TAG = "WeatherQuery";
 		
 	public WeatherQuery() {
 		connection = null;
@@ -57,9 +58,7 @@ public class WeatherQuery {
         public void run() {
             try {
                 weather = getAPIResponse(request, date);
-            }catch(XPathExpressionException e){
-                e.printStackTrace();
-            }catch(IOException e){
+            }catch(XPathExpressionException | IOException e){
                 e.printStackTrace();
             }
         }
@@ -68,6 +67,7 @@ public class WeatherQuery {
             return weather;
         }
     }
+
 	private Weather getAPIResponse(String request, Date d) throws IOException, XPathExpressionException{
 		
 		URL url = new URL(httpRequest + request);
@@ -86,14 +86,10 @@ public class WeatherQuery {
         if(diff > 10){
         	return new Weather("","");
         }
-		
-//		for (int i = 0, n = iconNodes.getLength(); i < n; i++) {
-//			Node node = iconNodes.item(i).getFirstChild();
-//			System.out.println(node.getNodeName() + ": " + node.getNodeValue());
-//			System.out.println(node.toString());
-//
-//	    }
-		
+
+		Log.v(TAG, urlNodes.item(diff).getFirstChild().getNodeValue());
+
+
 		return new Weather(iconNodes.item(diff).getFirstChild().getNodeValue(), urlNodes.item(diff).getFirstChild().getNodeValue());
 	}
 }

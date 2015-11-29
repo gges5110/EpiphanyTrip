@@ -12,23 +12,14 @@
     android:layout_width="match_parent"
     android:layout_height="0dp"
     android:orientation="horizontal"
-    android:layout_weight="1"
+    android:layout_weight="0.8"
     android:weightSum="3"
-        android:layout_marginTop="80dp">
+        android:layout_marginTop="40dp">
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:text="Location"
-            android:id="@+id/textView"
-            android:textSize="20dp"
-            android:layout_gravity="left"
-            android:gravity="center"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -55,60 +46,45 @@
         android:orientation="vertical"
         android:layout_weight="2">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:weightSum="2">
-            <EditText
-                android:text="Dallas"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:id="@+id/Query_edit_text_location_city"
-                android:textSize="20dp"
-                android:hint="@string/Query_command_1" />
-            <EditText
-                android:text="TX"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:id="@+id/Query_edit_text_location_state"
-                android:textSize="20dp"
-                android:hint="@string/Query_command_1" />
-        </LinearLayout>
-
         <Button
             android:text=""
             android:hint="@string/Query_command_2"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:id="@+id/Query_edit_text_2"
             android:textSize="20dp"
             android:onClick="showDatePickerDialog"
-            android:layout_marginLeft="0dp" />
-        <EditText
-            android:text="20"
-            android:hint="@string/Query_command_3"
+            android:layout_marginLeft="0dp"
+            android:singleLine="true" />
+        <SeekBar
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:id="@+id/Query_edit_text_distance"
-            android:textSize="20dp"
-            android:gravity="left"/>
+            android:layout_height="wrap_content"
+            android:max="20"
+            android:id="@+id/seekBar" />
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
-
-    <fragment
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/map"
-        android:layout_weight="2" />
+        android:layout_weight="2">
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_weight="2" />
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/abc_ic_clear_mtrl_alpha"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
     <Button
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:text="Start"
         android:textSize="20dp"
         android:id="@+id/button"

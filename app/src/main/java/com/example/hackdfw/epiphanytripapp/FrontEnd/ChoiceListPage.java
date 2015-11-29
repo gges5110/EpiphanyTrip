@@ -78,7 +78,11 @@ public class ChoiceListPage extends Activity {
             if(list.get(i).getWeather() != null)
                 details +=  "\n\t\t" + list.get(i).getWeather().getSummary();
             entries.add(details);
-            String URLs = list.get(i).getPicURL();
+            String URLs;
+            if(list.get(i).getWeather() != null)
+                URLs = list.get(i).getWeather().getPicURL();
+            else
+                URLs = "http://dreamatico.com/data_images/weather/weather-1.jpg";
             URLentries.add(URLs);
         }
 
